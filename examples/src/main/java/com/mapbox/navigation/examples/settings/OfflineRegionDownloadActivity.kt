@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.gson.GeometryGeoJson
-import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.geometry.LatLngBounds
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
@@ -32,16 +31,11 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import com.mapbox.navigation.base.logger.model.Message
 import com.mapbox.navigation.examples.R
 import com.mapbox.navigation.logger.MapboxLogger
-import com.mapbox.services.android.navigation.v5.navigation.MapboxOfflineRouter
-import com.mapbox.services.android.navigation.v5.navigation.OfflineError
-import com.mapbox.services.android.navigation.v5.navigation.OfflineTiles
-import com.mapbox.services.android.navigation.v5.navigation.OnOfflineTilesRemovedCallback
-import com.mapbox.services.android.navigation.v5.navigation.OnTileVersionsFoundCallback
-import com.mapbox.services.android.navigation.v5.navigation.RouteTileDownloadListener
+import com.mapbox.navigation.route.onboard.OnOfflineTilesRemovedCallback
 import kotlinx.android.synthetic.main.activity_offline_region_download.*
 import org.json.JSONObject
 
-class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadListener,
+class OfflineRegionDownloadActivity : AppCompatActivity(), /*RouteTileDownloadListener,*/
     OnOfflineTilesRemovedCallback {
 
     companion object {
@@ -71,10 +65,10 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
                 northEast.longitude, northEast.latitude
             )
         }
-    private val mapboxOfflineRouter: MapboxOfflineRouter
+    /*private val mapboxOfflineRouter: MapboxOfflineRouter
         get() {
             return MapboxOfflineRouter(obtainOfflineDirectory())
-        }
+        }*/
 
     private lateinit var offlineManager: OfflineManager
     private var offlineRegion: OfflineRegion? = null
@@ -124,7 +118,7 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
     }
 
     private fun setupSpinner() {
-        val token = Mapbox.getAccessToken() ?: return
+        /*val token = Mapbox.getAccessToken() ?: return
         mapboxOfflineRouter
             .fetchAvailableTileVersions(token,
                 object : OnTileVersionsFoundCallback {
@@ -136,7 +130,7 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
                         onVersionFetchFailed()
                     }
                 }
-            )
+            )*/
     }
 
     fun onVersionFetchFailed() {
@@ -281,21 +275,21 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
     }
 
     private fun downloadSelectedRegion() {
-        val token = Mapbox.getAccessToken() ?: return
+        /*val token = Mapbox.getAccessToken() ?: return
 
         val builder = OfflineTiles.builder(applicationContext)
             .accessToken(token)
             .version(versionSpinner.selectedItem as String)
             .boundingBox(boundingBox)
 
-        mapboxOfflineRouter.downloadTiles(builder.build(), this)
+        mapboxOfflineRouter.downloadTiles(builder.build(), this)*/
     }
 
     private fun removeSelectedRegion() {
-        showRemoving(true, "Removing tiles....")
+        /*showRemoving(true, "Removing tiles....")
         retrieveOfflineVersionFromPreferences()?.let { version ->
             mapboxOfflineRouter.removeTiles(version, boundingBox, this)
-        }
+        }*/
     }
 
     private fun retrieveOfflineVersionFromPreferences(): String? {
@@ -345,7 +339,7 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
    * Download listeners
    */
 
-    override fun onError(error: OfflineError) {
+    /*override fun onError(error: OfflineError) {
         setDownloadButtonEnabled(true)
         isDownloadCompleted = false
         showToast("There was an error with the download: ${error.message}. Please try again.")
@@ -359,7 +353,7 @@ class OfflineRegionDownloadActivity : AppCompatActivity(), RouteTileDownloadList
         setDownloadButtonEnabled(true)
         isDownloadCompleted = false
         showToast("Download complete")
-    }
+    }*/
 
     override fun onRemoved(numberOfTiles: Long) {
         showRemoving(false, "Remove Region")

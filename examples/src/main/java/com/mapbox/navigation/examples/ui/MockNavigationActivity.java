@@ -1,86 +1,13 @@
 package com.mapbox.navigation.examples.ui;
 
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.mapbox.android.core.location.LocationEngine;
-import com.mapbox.android.core.location.LocationEngineCallback;
-import com.mapbox.android.core.location.LocationEngineResult;
-import com.mapbox.api.directions.v5.models.DirectionsResponse;
-import com.mapbox.api.directions.v5.models.DirectionsRoute;
-import com.mapbox.geojson.Point;
-import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
-import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.location.LocationComponent;
-import com.mapbox.mapboxsdk.location.modes.RenderMode;
-import com.mapbox.mapboxsdk.maps.MapView;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.navigation.base.logger.model.Message;
-import com.mapbox.navigation.base.logger.model.Tag;
-import com.mapbox.navigation.examples.R;
-import com.mapbox.navigation.examples.ui.notification.CustomNavigationNotification;
-import com.mapbox.navigation.examples.utils.Utils;
-import com.mapbox.navigation.logger.LogEntry;
-import com.mapbox.navigation.logger.LogPriority;
-import com.mapbox.navigation.logger.LoggerObserver;
-import com.mapbox.navigation.logger.MapboxLogger;
-import com.mapbox.services.android.navigation.v5.navigation.metrics.MapboxMetricsReporter;
-import com.mapbox.services.android.navigation.v5.navigation.metrics.MetricEvent;
-import com.mapbox.services.android.navigation.v5.navigation.metrics.MetricsObserver;
-import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
-import com.mapbox.services.android.navigation.v5.instruction.Instruction;
-import com.mapbox.services.android.navigation.v5.location.replay.ReplayRouteLocationEngine;
-import com.mapbox.services.android.navigation.v5.milestone.Milestone;
-import com.mapbox.services.android.navigation.v5.milestone.MilestoneEventListener;
-import com.mapbox.services.android.navigation.v5.milestone.RouteMilestone;
-import com.mapbox.services.android.navigation.v5.milestone.Trigger;
-import com.mapbox.services.android.navigation.v5.milestone.TriggerProperty;
-import com.mapbox.services.android.navigation.v5.navigation.MapboxNavigation;
-import com.mapbox.services.android.navigation.v5.navigation.MapboxNavigationOptions;
-import com.mapbox.services.android.navigation.v5.navigation.NavigationEventListener;
-import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
-import com.mapbox.services.android.navigation.v5.navigation.RefreshCallback;
-import com.mapbox.services.android.navigation.v5.navigation.RefreshError;
-import com.mapbox.services.android.navigation.v5.navigation.RouteRefresh;
-import com.mapbox.services.android.navigation.v5.offroute.OffRouteListener;
-import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener;
-import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress;
-import com.mapbox.turf.TurfConstants;
-import com.mapbox.turf.TurfMeasurement;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.ref.WeakReference;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import timber.log.Timber;
-
-public class MockNavigationActivity extends AppCompatActivity implements OnMapReadyCallback,
+public class MockNavigationActivity extends AppCompatActivity /*implements OnMapReadyCallback,
         MapboxMap.OnMapClickListener, ProgressChangeListener, NavigationEventListener,
         MilestoneEventListener, OffRouteListener, RefreshCallback, MetricsObserver,
-        LoggerObserver {
+        LoggerObserver*/ {
 
-  private static final int BEGIN_ROUTE_MILESTONE = 1001;
+  /*private static final int BEGIN_ROUTE_MILESTONE = 1001;
   private static final double TWENTY_FIVE_METERS = 25d;
 
   // Map variables
@@ -278,9 +205,9 @@ public class MockNavigationActivity extends AppCompatActivity implements OnMapRe
     });
   }
 
-  /*
+  *//*
    * Navigation listeners
-   */
+   *//*
 
   @Override
   public void onMilestoneEvent(@NotNull RouteProgress routeProgress, @NotNull String instruction, Milestone milestone) {
@@ -314,9 +241,9 @@ public class MockNavigationActivity extends AppCompatActivity implements OnMapRe
     );
   }
 
-  /*
+  *//*
    * Activity lifecycle methods
-   */
+   *//*
 
   @Override
   public void onResume() {
@@ -415,5 +342,5 @@ public class MockNavigationActivity extends AppCompatActivity implements OnMapRe
     public String buildInstruction(@NotNull RouteProgress routeProgress) {
       return "Have a safe trip!";
     }
-  }
+  }*/
 }
