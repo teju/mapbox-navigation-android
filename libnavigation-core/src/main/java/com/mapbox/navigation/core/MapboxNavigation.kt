@@ -8,6 +8,7 @@ import androidx.annotation.RequiresPermission
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineRequest
+import com.mapbox.android.telemetry.MapboxTelemetry
 import com.mapbox.annotation.navigation.module.MapboxNavigationModuleType
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
@@ -31,7 +32,9 @@ import com.mapbox.navigation.core.directions.session.RoutesObserver
 import com.mapbox.navigation.core.directions.session.RoutesRequestCallback
 import com.mapbox.navigation.core.fasterroute.FasterRouteDetector
 import com.mapbox.navigation.core.fasterroute.FasterRouteObserver
+import com.mapbox.navigation.core.metrics.MapboxMetricsReporter
 import com.mapbox.navigation.core.module.NavigationModuleProvider
+import com.mapbox.navigation.core.telemetry.MapboxNavigationTelemetry
 import com.mapbox.navigation.core.trip.service.TripService
 import com.mapbox.navigation.core.trip.session.BannerInstructionsObserver
 import com.mapbox.navigation.core.trip.session.LocationObserver
@@ -128,6 +131,14 @@ constructor(
     private val fasterRouteObservers = CopyOnWriteArrayList<FasterRouteObserver>()
 
     private var notificationChannelField: Field? = null
+    private val MAPBOX_NAVIGATION_USER_AGENT_BASE = "mapbox-navigation-android"
+    private val MAPBOX_NAVIGATION_UI_USER_AGENT_BASE = "mapbox-navigation-ui-android"
+
+    /**
+     * Obtains a user agent string based on where this code is being called from
+     */
+    private fun obtainUserAgent(): String =
+            MAPBOX_NAVIGATION_USER_AGENT_BASE + BuildConfig.MAPBOX_NAVIGATION_VERSION_NAME
 
     init {
         ThreadController.init()
@@ -139,6 +150,16 @@ constructor(
         )
         directionsSession.registerRoutesObserver(internalRoutesObserver)
         directionsSession.registerRoutesObserver(navigationSession)
+        ifNonNull(accessToken) { token ->
+            // Initialize telemetry. This will cause a turnstile event to be sent to the back end servers
+            MapboxNavigationTelemetry.initialize(context.applicationContext,
+                    token,
+                    this,
+                    locationEngine,
+                    MapboxTelemetry(context, token, obtainUserAgent()),
+                    locationEngineRequest,
+                    MapboxMetricsReporter(context, token, obtainUserAgent()))
+        }
 
         val notification: TripNotification = NavigationModuleProvider.createModule(
             MapboxNavigationModuleType.TripNotification,
